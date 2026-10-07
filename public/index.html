@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,9 +12,11 @@
     <link rel="manifest" href="/manifest.json">
 
     <!-- iPhone / iPad Home Screen Icon -->
-    <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+    <link rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png">
 
-    <!-- Makes the installed iPhone version behave more like an app -->
+    <!-- iPhone App Settings -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Lead Finder">
@@ -379,11 +380,8 @@
     </div>
 
     <div class="loading" id="loading">
-
         <div class="spinner"></div>
-
         Searching for businesses...
-
     </div>
 
     <div class="results-header" id="resultsHeader"></div>
@@ -525,13 +523,11 @@ function displayResults(data) {
             </div>
 
             <div class="tags">
-
                 ${
                     processes.map(process =>
                         `<span class="tag">${escapeHtml(process)}</span>`
                     ).join("")
                 }
-
             </div>
 
             <div class="score">
@@ -563,7 +559,6 @@ function displayResults(data) {
                 </button>
 
             </div>
-
         `;
 
         container.appendChild(card);
@@ -633,7 +628,7 @@ function escapeAttribute(value) {
 }
 
 
-/* Register Service Worker */
+/* Register Progressive Web App service worker */
 
 if ("serviceWorker" in navigator) {
 
@@ -660,4 +655,3 @@ if ("serviceWorker" in navigator) {
 
 </body>
 </html>
-```
