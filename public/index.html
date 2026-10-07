@@ -9,12 +9,20 @@
 
     <meta name="theme-color" content="#17202a">
 
+    <!-- Progressive Web App -->
     <link rel="manifest" href="/manifest.json">
+
+    <!-- iPhone / iPad Home Screen Icon -->
+    <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+
+    <!-- Makes the installed iPhone version behave more like an app -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Lead Finder">
 
     <title>Industrial Lead Finder</title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -229,7 +237,6 @@
         }
 
         @media (min-width: 700px) {
-
             .process-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
@@ -244,7 +251,6 @@
                 margin-left: 10px;
             }
         }
-
     </style>
 </head>
 
@@ -261,6 +267,7 @@
 
         <div class="field">
             <label for="location">ZIP Code or Location</label>
+
             <input
                 id="location"
                 type="text"
@@ -269,6 +276,7 @@
         </div>
 
         <div class="field">
+
             <label for="radius">Search Radius</label>
 
             <select id="radius">
@@ -278,6 +286,7 @@
                 <option value="50">50 miles</option>
                 <option value="100">100 miles</option>
             </select>
+
         </div>
 
         <div class="field">
@@ -357,7 +366,6 @@
                 </label>
 
             </div>
-
         </div>
 
         <button class="search-btn" onclick="searchBusinesses()">
@@ -412,9 +420,7 @@ async function searchBusinesses() {
     }
 
     document.getElementById("loading").style.display = "block";
-
     document.getElementById("results").innerHTML = "";
-
     document.getElementById("resultsHeader").innerHTML = "";
 
     try {
@@ -432,7 +438,6 @@ async function searchBusinesses() {
                 radiusMiles,
                 processes
             })
-
         });
 
         const data = await response.json();
@@ -504,9 +509,11 @@ function displayResults(data) {
             </div>
 
             <div class="distance">
-                ${business.distanceMiles != null
+                ${
+                    business.distanceMiles != null
                     ? business.distanceMiles.toFixed(1) + " miles away"
-                    : ""}
+                    : ""
+                }
             </div>
 
             <div class="info">
@@ -519,9 +526,11 @@ function displayResults(data) {
 
             <div class="tags">
 
-                ${processes.map(process =>
-                    `<span class="tag">${escapeHtml(process)}</span>`
-                ).join("")}
+                ${
+                    processes.map(process =>
+                        `<span class="tag">${escapeHtml(process)}</span>`
+                    ).join("")
+                }
 
             </div>
 
@@ -560,7 +569,6 @@ function displayResults(data) {
         container.appendChild(card);
 
     });
-
 }
 
 
@@ -592,14 +600,12 @@ function saveLead(business) {
         alert("This lead is already saved.");
 
     }
-
 }
 
 
 function clearResults() {
 
     document.getElementById("results").innerHTML = "";
-
     document.getElementById("resultsHeader").innerHTML = "";
 
 }
@@ -627,7 +633,7 @@ function escapeAttribute(value) {
 }
 
 
-/* Register the Progressive Web App service worker */
+/* Register Service Worker */
 
 if ("serviceWorker" in navigator) {
 
@@ -636,7 +642,9 @@ if ("serviceWorker" in navigator) {
         navigator.serviceWorker
             .register("/sw.js")
             .then(() => {
-                console.log("Industrial Lead Finder service worker registered.");
+                console.log(
+                    "Industrial Lead Finder service worker registered."
+                );
             })
             .catch(error => {
                 console.error(
@@ -646,7 +654,6 @@ if ("serviceWorker" in navigator) {
             });
 
     });
-
 }
 
 </script>
