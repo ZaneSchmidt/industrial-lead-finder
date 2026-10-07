@@ -1,1507 +1,611 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Industrial Lead Finder</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f3f5f7;
-    color: #17202a;
-}
-
-/* HEADER */
-
-.header {
-    background: #17202a;
-    color: white;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.15);
-}
-
-.header-inner {
-    max-width: 1200px;
-    margin: auto;
-}
-
-.logo {
-    font-size: 25px;
-    font-weight: 800;
-    letter-spacing: .3px;
-}
-
-.subtitle {
-    margin-top: 5px;
-    color: #bfc7cf;
-    font-size: 14px;
-}
-
-/* MAIN */
-
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
-}
-
-/* SEARCH PANEL */
-
-.search-panel {
-    background: white;
-    border-radius: 14px;
-    padding: 20px;
-    box-shadow: 0 3px 12px rgba(0,0,0,.08);
-    margin-bottom: 20px;
-}
-
-.section-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 15px;
-}
-
-.search-grid {
-    display: grid;
-    grid-template-columns: 1fr 180px;
-    gap: 12px;
-}
-
-label {
-    font-size: 13px;
-    font-weight: 700;
-    display: block;
-    margin-bottom: 6px;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #ccd2d8;
-    border-radius: 8px;
-    font-size: 16px;
-    background: white;
-}
-
-input:focus,
-select:focus {
-    outline: none;
-    border-color: #1f6feb;
-    box-shadow: 0 0 0 3px rgba(31,111,235,.12);
-}
-
-/* PROCESS OPTIONS */
-
-.process-title {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.process-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-}
-
-.process-option {
-    position: relative;
-}
-
-.process-option input {
-    position: absolute;
-    opacity: 0;
-}
-
-.process-option label {
-    margin: 0;
-    padding: 10px;
-    border: 1px solid #d6dbe0;
-    border-radius: 8px;
-    background: #f8f9fa;
-    cursor: pointer;
-    font-size: 13px;
-    text-align: center;
-    transition: .15s;
-}
-
-.process-option input:checked + label {
-    background: #e8f1ff;
-    border-color: #1f6feb;
-    color: #1457b8;
-    font-weight: 700;
-}
-
-/* BUTTONS */
-
-.buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-button {
-    border: none;
-    border-radius: 9px;
-    padding: 14px 20px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.search-button {
-    flex: 1;
-    background: #1f6feb;
-    color: white;
-}
-
-.search-button:hover {
-    background: #185abd;
-}
-
-.clear-button {
-    background: #e9ecef;
-    color: #333;
-}
-
-/* STATUS */
-
-.status {
-    display: none;
-    text-align: center;
-    padding: 20px;
-    background: white;
-    border-radius: 12px;
-    margin-bottom: 20px;
-}
-
-.spinner {
-    width: 30px;
-    height: 30px;
-    border: 4px solid #dfe5eb;
-    border-top-color: #1f6feb;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 10px;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* RESULTS HEADER */
-
-.results-header {
-    display: none;
-    justify-content: space-between;
-    align-items: center;
-    background: white;
-    padding: 15px 18px;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.06);
-}
-
-.result-count {
-    font-size: 18px;
-    font-weight: 800;
-}
-
-.result-subtitle {
-    font-size: 13px;
-    color: #68737d;
-    margin-top: 3px;
-}
-
-/* RESULTS */
-
-.results {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-}
-
-/* BUSINESS CARD */
-
-.business-card {
-    background: white;
-    border-radius: 13px;
-    padding: 18px;
-    box-shadow: 0 2px 9px rgba(0,0,0,.07);
-    border: 1px solid #e2e6e9;
-}
-
-.business-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.business-name {
-    font-size: 18px;
-    font-weight: 800;
-    line-height: 1.25;
-}
-
-.distance {
-    white-space: nowrap;
-    font-size: 13px;
-    font-weight: 700;
-    color: #1f6feb;
-}
-
-.address {
-    margin-top: 9px;
-    color: #606b75;
-    font-size: 13px;
-    line-height: 1.4;
-}
-
-.phone {
-    margin-top: 7px;
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.phone a {
-    color: #17202a;
-    text-decoration: none;
-}
-
-/* SCORE */
-
-.score-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 14px;
-}
-
-.score-label {
-    font-size: 12px;
-    color: #68737d;
-}
-
-.score {
-    font-size: 13px;
-    font-weight: 800;
-    padding: 5px 9px;
-    border-radius: 20px;
-    background: #e9f7ef;
-    color: #16803c;
-}
-
-/* PROCESS TAGS */
-
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 12px;
-}
-
-.tag {
-    background: #eef2f5;
-    border-radius: 20px;
-    padding: 5px 9px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #46515b;
-}
-
-/* CARD BUTTONS */
-
-.card-buttons {
-    display: flex;
-    gap: 8px;
-    margin-top: 15px;
-}
-
-.card-buttons a,
-.card-buttons button {
-    flex: 1;
-    text-align: center;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 7px;
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.call-button {
-    background: #e9f7ef;
-    color: #16803c;
-}
-
-.website-button {
-    background: #e8f1ff;
-    color: #1457b8;
-}
-
-.save-button {
-    background: #f1f3f5;
-    color: #444;
-}
-
-.save-button.saved {
-    background: #fff3cd;
-    color: #856404;
-}
-
-/* EMPTY */
-
-.empty {
-    display: none;
-    text-align: center;
-    background: white;
-    padding: 40px 20px;
-    border-radius: 12px;
-}
-
-.empty-title {
-    font-size: 20px;
-    font-weight: 800;
-}
-
-.empty-text {
-    margin-top: 8px;
-    color: #68737d;
-}
-
-/* ERROR */
-
-.error {
-    display: none;
-    background: #fff0f0;
-    border: 1px solid #f0b5b5;
-    color: #a32121;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-
-/* MOBILE */
-
-@media (max-width: 800px) {
-
-    .container {
-        padding: 12px;
-    }
-
-    .search-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .process-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .results {
-        grid-template-columns: 1fr;
-    }
-
-    .business-name {
-        font-size: 17px;
-    }
-
-}
-
-@media (max-width: 500px) {
-
-    .header {
-        padding: 16px;
-    }
-
-    .logo {
-        font-size: 21px;
-    }
-
-    .search-panel {
-        padding: 15px;
-    }
-
-    .buttons {
-        flex-direction: column;
-    }
-
-    .card-buttons {
-        flex-wrap: wrap;
-    }
-
-    .card-buttons a,
-    .card-buttons button {
-        min-width: 30%;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="theme-color" content="#17202a">
+
+    <link rel="manifest" href="/manifest.json">
+
+    <title>Industrial Lead Finder</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f2f4f7;
+            color: #17202a;
+        }
+
+        header {
+            background: #17202a;
+            color: white;
+            padding: 18px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .search-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccd2d8;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .process-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .process-option input {
+            width: auto;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .search-btn {
+            width: 100%;
+            background: #1f6feb;
+            color: white;
+        }
+
+        .clear-btn {
+            width: 100%;
+            margin-top: 10px;
+            background: #e5e7eb;
+            color: #17202a;
+        }
+
+        .results-header {
+            margin: 25px 0 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .results {
+            display: grid;
+            gap: 15px;
+        }
+
+        .business-card {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .business-name {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .distance {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .info {
+            margin: 6px 0;
+            font-size: 14px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 12px 0;
+        }
+
+        .tag {
+            background: #e8f0fe;
+            color: #174ea6;
+            padding: 5px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .score {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .actions a,
+        .actions button {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            padding: 11px 8px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .call {
+            background: #198754;
+            color: white;
+        }
+
+        .website {
+            background: #1f6feb;
+            color: white;
+        }
+
+        .save {
+            background: #f0ad4e;
+            color: white;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 25px;
+            font-weight: bold;
+        }
+
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 4px solid #ddd;
+            border-top: 4px solid #1f6feb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: auto auto 10px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (min-width: 700px) {
+
+            .process-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .search-btn,
+            .clear-btn {
+                width: auto;
+            }
+
+            .clear-btn {
+                margin-top: 0;
+                margin-left: 10px;
+            }
+        }
+
+    </style>
 </head>
-
 
 <body>
 
-
-<!-- HEADER -->
-
-<header class="header">
-
-    <div class="header-inner">
-
-        <div class="logo">
-            🏭 Industrial Lead Finder
-        </div>
-
-        <div class="subtitle">
-            Find industrial businesses and turn them into sales opportunities.
-        </div>
-
-    </div>
-
+<header>
+    <h1>Industrial Lead Finder</h1>
+    <p>Find industrial businesses and sales prospects</p>
 </header>
 
+<div class="container">
 
-<main class="container">
+    <div class="search-panel">
 
-
-<!-- SEARCH PANEL -->
-
-<section class="search-panel">
-
-    <div class="section-title">
-        Find Industrial Businesses
-    </div>
-
-
-    <div class="search-grid">
-
-        <div>
-
-            <label for="location">
-                ZIP Code or Location
-            </label>
-
+        <div class="field">
+            <label for="location">ZIP Code or Location</label>
             <input
                 id="location"
                 type="text"
                 value="17401"
-                placeholder="Enter ZIP code or city"
-            >
-
+                placeholder="Enter ZIP code or city">
         </div>
 
-
-        <div>
-
-            <label for="radius">
-                Search Radius
-            </label>
+        <div class="field">
+            <label for="radius">Search Radius</label>
 
             <select id="radius">
-
                 <option value="5">5 miles</option>
-
                 <option value="10">10 miles</option>
-
-                <option value="25" selected>
-                    25 miles
-                </option>
-
-                <option value="50">
-                    50 miles
-                </option>
-
-                <option value="100">
-                    100 miles
-                </option>
-
+                <option value="25" selected>25 miles</option>
+                <option value="50">50 miles</option>
+                <option value="100">100 miles</option>
             </select>
+        </div>
+
+        <div class="field">
+
+            <label>Industrial Processes</label>
+
+            <div class="process-grid">
+
+                <label class="process-option">
+                    <input type="checkbox" value="CNC Machining">
+                    CNC Machining
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Machining">
+                    Machining
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Welding">
+                    Welding
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Fabrication">
+                    Fabrication
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Sheet Metal">
+                    Sheet Metal
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Laser Cutting">
+                    Laser Cutting
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Plasma Cutting">
+                    Plasma Cutting
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Waterjet">
+                    Waterjet
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Powder Coating">
+                    Powder Coating
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Industrial Painting">
+                    Industrial Painting
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Stamping">
+                    Stamping
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Grinding">
+                    Grinding
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Tube Bending">
+                    Tube Bending
+                </label>
+
+                <label class="process-option">
+                    <input type="checkbox" value="Assembly">
+                    Assembly
+                </label>
+
+            </div>
 
         </div>
 
-    </div>
-
-
-    <div class="process-title">
-        Select Industrial Processes
-    </div>
-
-
-    <div class="process-grid">
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p1"
-                value="CNC Machining"
-                checked
-            >
-
-            <label for="p1">
-                CNC Machining
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p2"
-                value="Machining"
-                checked
-            >
-
-            <label for="p2">
-                Machining
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p3"
-                value="Welding"
-                checked
-            >
-
-            <label for="p3">
-                Welding
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p4"
-                value="Fabrication"
-                checked
-            >
-
-            <label for="p4">
-                Fabrication
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p5"
-                value="Sheet Metal"
-            >
-
-            <label for="p5">
-                Sheet Metal
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p6"
-                value="Laser Cutting"
-            >
-
-            <label for="p6">
-                Laser Cutting
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p7"
-                value="Plasma Cutting"
-            >
-
-            <label for="p7">
-                Plasma Cutting
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p8"
-                value="Waterjet"
-            >
-
-            <label for="p8">
-                Waterjet
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p9"
-                value="Powder Coating"
-            >
-
-            <label for="p9">
-                Powder Coating
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p10"
-                value="Industrial Painting"
-            >
-
-            <label for="p10">
-                Industrial Painting
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p11"
-                value="Stamping"
-            >
-
-            <label for="p11">
-                Stamping
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p12"
-                value="Grinding"
-            >
-
-            <label for="p12">
-                Grinding
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p13"
-                value="Tube Bending"
-            >
-
-            <label for="p13">
-                Tube Bending
-            </label>
-
-        </div>
-
-
-        <div class="process-option">
-
-            <input
-                type="checkbox"
-                id="p14"
-                value="Assembly"
-            >
-
-            <label for="p14">
-                Assembly
-            </label>
-
-        </div>
-
-
-    </div>
-
-
-    <div class="buttons">
-
-        <button
-            class="search-button"
-            id="searchButton"
-            onclick="searchBusinesses()"
-        >
-            🔎 FIND BUSINESSES
+        <button class="search-btn" onclick="searchBusinesses()">
+            FIND BUSINESSES
         </button>
 
-
-        <button
-            class="clear-button"
-            onclick="clearSearch()"
-        >
-            Clear
+        <button class="clear-btn" onclick="clearResults()">
+            CLEAR
         </button>
 
     </div>
 
-</section>
+    <div class="loading" id="loading">
 
+        <div class="spinner"></div>
 
-<!-- ERROR -->
-
-<div
-    class="error"
-    id="error"
-></div>
-
-
-<!-- LOADING -->
-
-<div
-    class="status"
-    id="status"
->
-
-    <div class="spinner"></div>
-
-    <strong>
         Searching for businesses...
-    </strong>
 
-    <div style="margin-top:5px;color:#68737d;font-size:13px;">
-        This may take a few seconds.
     </div>
+
+    <div class="results-header" id="resultsHeader"></div>
+
+    <div class="results" id="results"></div>
 
 </div>
-
-
-<!-- RESULTS HEADER -->
-
-<div
-    class="results-header"
-    id="resultsHeader"
->
-
-    <div>
-
-        <div
-            class="result-count"
-            id="resultCount"
-        >
-            0 Businesses Found
-        </div>
-
-        <div
-            class="result-subtitle"
-            id="resultSubtitle"
-        >
-            Best prospects shown first
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- RESULTS -->
-
-<div
-    class="results"
-    id="results"
-></div>
-
-
-<!-- EMPTY -->
-
-<div
-    class="empty"
-    id="empty"
->
-
-    <div class="empty-title">
-        No businesses found
-    </div>
-
-    <div class="empty-text">
-        Try increasing the search radius or selecting additional processes.
-    </div>
-
-</div>
-
-
-</main>
-
 
 <script>
-
-
-/*
-====================================================
-SEARCH BUSINESSES
-====================================================
-*/
 
 async function searchBusinesses() {
 
     const location =
-        document
-        .getElementById("location")
-        .value
-        .trim();
+        document.getElementById("location").value.trim();
 
-
-    const radius =
-        Number(
-            document
-            .getElementById("radius")
-            .value
-        );
-
+    const radiusMiles =
+        Number(document.getElementById("radius").value);
 
     const processes =
         Array.from(
             document.querySelectorAll(
                 '.process-option input:checked'
             )
-        )
-        .map(
-            checkbox =>
-                checkbox.value
-        );
-
-
-    const results =
-        document.getElementById(
-            "results"
-        );
-
-
-    const status =
-        document.getElementById(
-            "status"
-        );
-
-
-    const error =
-        document.getElementById(
-            "error"
-        );
-
-
-    const empty =
-        document.getElementById(
-            "empty"
-        );
-
-
-    const resultsHeader =
-        document.getElementById(
-            "resultsHeader"
-        );
-
-
-    /*
-    CLEAR OLD RESULTS
-    */
-
-    results.innerHTML = "";
-
-    error.style.display = "none";
-
-    empty.style.display = "none";
-
-    resultsHeader.style.display = "none";
-
-
-    /*
-    VALIDATION
-    */
+        ).map(input => input.value);
 
     if (!location) {
-
-        showError(
-            "Please enter a ZIP code or location."
-        );
-
+        alert("Please enter a ZIP code or location.");
         return;
-
     }
 
-
-    if (!processes.length) {
-
-        showError(
-            "Please select at least one industrial process."
-        );
-
+    if (processes.length === 0) {
+        alert("Please select at least one industrial process.");
         return;
-
     }
 
+    document.getElementById("loading").style.display = "block";
 
-    /*
-    SHOW LOADING
-    */
+    document.getElementById("results").innerHTML = "";
 
-    status.style.display = "block";
-
-
-    const button =
-        document.getElementById(
-            "searchButton"
-        );
-
-
-    button.disabled = true;
-
-    button.innerText =
-        "SEARCHING...";
-
+    document.getElementById("resultsHeader").innerHTML = "";
 
     try {
 
+        const response = await fetch("/api/search", {
 
-        /*
-        ============================================
-        SEND SEARCH TO SERVER
-        ============================================
-        */
+            method: "POST",
 
-        const response =
-            await fetch(
-                "/api/search",
-                {
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-                    method: "POST",
+            body: JSON.stringify({
+                location,
+                radiusMiles,
+                processes
+            })
 
-                    headers: {
+        });
 
-                        "Content-Type":
-                            "application/json"
-
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            location:
-                                location,
-
-                            radiusMiles:
-                                radius,
-
-                            processes:
-                                processes
-
-                        })
-
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        /*
-        ============================================
-        HANDLE SERVER ERROR
-        ============================================
-        */
+        const data = await response.json();
 
         if (!response.ok) {
-
-            throw new Error(
-                data.error ||
-                "Search failed."
-            );
-
+            throw new Error(data.error || "Search failed.");
         }
 
-
-        /*
-        ============================================
-        DISPLAY RESULTS
-        ============================================
-        */
-
-        const leads =
-            data.leads || [];
-
-
-        status.style.display = "none";
-
-
-        if (!leads.length) {
-
-            empty.style.display = "block";
-
-            return;
-
-        }
-
-
-        resultsHeader.style.display =
-            "flex";
-
-
-        document.getElementById(
-            "resultCount"
-        ).innerText =
-            `${leads.length} Business${leads.length === 1 ? "" : "es"} Found`;
-
-
-        document.getElementById(
-            "resultSubtitle"
-        ).innerText =
-            `Within ${radius} miles • Best prospects shown first`;
-
-
-        leads.forEach(
-            lead => {
-
-                results.appendChild(
-                    createBusinessCard(
-                        lead
-                    )
-                );
-
-            }
-        );
-
-
-    } catch (err) {
-
-        status.style.display =
-            "none";
-
-
-        showError(
-            err.message ||
-            "Something went wrong while searching."
-        );
-
-
-    } finally {
-
-        button.disabled =
-            false;
-
-        button.innerText =
-            "🔎 FIND BUSINESSES";
-
-    }
-
-}
-
-
-/*
-====================================================
-CREATE BUSINESS CARD
-====================================================
-*/
-
-function createBusinessCard(
-    lead
-) {
-
-
-    const card =
-        document.createElement(
-            "div"
-        );
-
-
-    card.className =
-        "business-card";
-
-
-    /*
-    SAFE VALUES
-    */
-
-    const name =
-        escapeHtml(
-            lead.name ||
-            "Unknown Business"
-        );
-
-
-    const address =
-        escapeHtml(
-            lead.address ||
-            "Address unavailable"
-        );
-
-
-    const phone =
-        lead.phone ||
-        "";
-
-
-    const website =
-        lead.website ||
-        "";
-
-
-    const distance =
-        Number.isFinite(
-            Number(
-                lead.distanceMiles
-            )
-        )
-        ?
-        Number(
-            lead.distanceMiles
-        ).toFixed(1)
-        :
-        "—";
-
-
-    const score =
-        lead.score ||
-        0;
-
-
-    /*
-    PROCESS TAGS
-    */
-
-    const tags =
-        (lead.processes || [])
-        .map(
-            process =>
-                `<span class="tag">${escapeHtml(process)}</span>`
-        )
-        .join("");
-
-
-    /*
-    PHONE BUTTON
-    */
-
-    const callButton =
-        phone
-        ?
-        `
-        <a
-            class="call-button"
-            href="tel:${phone.replace(/[^0-9+]/g, "")}"
-        >
-            📞 Call
-        </a>
-        `
-        :
-        `
-        <span
-            class="call-button"
-            style="opacity:.45;"
-        >
-            📞 No Phone
-        </span>
-        `;
-
-
-    /*
-    WEBSITE BUTTON
-    */
-
-    const websiteButton =
-        website
-        ?
-        `
-        <a
-            class="website-button"
-            href="${escapeAttribute(website)}"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            🌐 Website
-        </a>
-        `
-        :
-        `
-        <span
-            class="website-button"
-            style="opacity:.45;"
-        >
-            🌐 No Website
-        </span>
-        `;
-
-
-    card.innerHTML = `
-
-        <div class="business-top">
-
-            <div class="business-name">
-                ${name}
-            </div>
-
-            <div class="distance">
-                ${distance} mi
-            </div>
-
-        </div>
-
-
-        <div class="address">
-            📍 ${address}
-        </div>
-
-
-        ${
-            phone
-            ?
-            `
-            <div class="phone">
-                📞
-                <a href="tel:${phone.replace(/[^0-9+]/g, "")}">
-                    ${escapeHtml(phone)}
-                </a>
-            </div>
-            `
-            :
-            ""
-        }
-
-
-        <div class="score-row">
-
-            <span class="score-label">
-                Lead Score
-            </span>
-
-            <span class="score">
-                ⭐ ${score}/100
-            </span>
-
-        </div>
-
-
-        <div class="tags">
-            ${tags}
-        </div>
-
-
-        <div class="card-buttons">
-
-            ${callButton}
-
-            ${websiteButton}
-
-            <button
-                class="save-button"
-                onclick="saveLead(this, ${JSON.stringify(lead).replace(/"/g, '&quot;')})"
-            >
-                💾 Save
-            </button>
-
-        </div>
-
-    `;
-
-
-    return card;
-
-}
-
-
-/*
-====================================================
-SAVE LEAD
-====================================================
-*/
-
-function saveLead(
-    button,
-    lead
-) {
-
-    try {
-
-        const saved =
-            JSON.parse(
-                localStorage.getItem(
-                    "savedLeads"
-                ) || "[]"
-            );
-
-
-        const exists =
-            saved.some(
-                item =>
-                    item.id === lead.id
-            );
-
-
-        if (!exists) {
-
-            saved.push(
-                lead
-            );
-
-
-            localStorage.setItem(
-                "savedLeads",
-                JSON.stringify(
-                    saved
-                )
-            );
-
-        }
-
-
-        button.innerText =
-            "✓ Saved";
-
-        button.classList.add(
-            "saved"
-        );
-
+        displayResults(data);
 
     } catch (error) {
 
-        console.error(
-            error
+        console.error(error);
+
+        alert("Search failed: " + error.message);
+
+    } finally {
+
+        document.getElementById("loading").style.display = "none";
+
+    }
+}
+
+
+function displayResults(data) {
+
+    const results = data.leads || [];
+
+    document.getElementById("resultsHeader").innerText =
+        `${results.length} businesses found`;
+
+    const container =
+        document.getElementById("results");
+
+    if (results.length === 0) {
+
+        container.innerHTML =
+            "<div class='business-card'>No businesses found.</div>";
+
+        return;
+    }
+
+    results.forEach(business => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "business-card";
+
+        const phone =
+            business.phone || "";
+
+        const website =
+            business.website || "";
+
+        const address =
+            business.address || "";
+
+        const score =
+            business.leadScore ?? business.score ?? "";
+
+        const processes =
+            business.processes || [];
+
+        card.innerHTML = `
+
+            <div class="business-name">
+                ${escapeHtml(business.name || "Unknown Business")}
+            </div>
+
+            <div class="distance">
+                ${business.distanceMiles != null
+                    ? business.distanceMiles.toFixed(1) + " miles away"
+                    : ""}
+            </div>
+
+            <div class="info">
+                ${escapeHtml(address)}
+            </div>
+
+            <div class="info">
+                ${escapeHtml(phone)}
+            </div>
+
+            <div class="tags">
+
+                ${processes.map(process =>
+                    `<span class="tag">${escapeHtml(process)}</span>`
+                ).join("")}
+
+            </div>
+
+            <div class="score">
+                Lead Score: ${score}
+            </div>
+
+            <div class="actions">
+
+                ${
+                    phone
+                    ? `<a class="call" href="tel:${phone}">CALL</a>`
+                    : ""
+                }
+
+                ${
+                    website
+                    ? `<a class="website"
+                         href="${escapeAttribute(website)}"
+                         target="_blank">
+                         WEBSITE
+                       </a>`
+                    : ""
+                }
+
+                <button
+                    class="save"
+                    onclick='saveLead(${JSON.stringify(business).replace(/'/g, "&#39;")})'>
+                    SAVE
+                </button>
+
+            </div>
+
+        `;
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+function saveLead(business) {
+
+    const saved =
+        JSON.parse(
+            localStorage.getItem("savedLeads") || "[]"
         );
+
+    const exists =
+        saved.some(
+            lead => lead.placeId === business.placeId
+        );
+
+    if (!exists) {
+
+        saved.push(business);
+
+        localStorage.setItem(
+            "savedLeads",
+            JSON.stringify(saved)
+        );
+
+        alert("Lead saved!");
+
+    } else {
+
+        alert("This lead is already saved.");
 
     }
 
 }
 
 
-/*
-====================================================
-CLEAR SEARCH
-====================================================
-*/
+function clearResults() {
 
-function clearSearch() {
+    document.getElementById("results").innerHTML = "";
 
-    document.getElementById(
-        "location"
-    ).value = "17401";
-
-
-    document.getElementById(
-        "radius"
-    ).value = "25";
-
-
-    document
-        .querySelectorAll(
-            ".process-option input"
-        )
-        .forEach(
-            checkbox => {
-
-                checkbox.checked =
-                    [
-                        "CNC Machining",
-                        "Machining",
-                        "Welding",
-                        "Fabrication"
-                    ].includes(
-                        checkbox.value
-                    );
-
-            }
-        );
-
-
-    document.getElementById(
-        "results"
-    ).innerHTML = "";
-
-
-    document.getElementById(
-        "resultsHeader"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "empty"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "error"
-    ).style.display = "none";
+    document.getElementById("resultsHeader").innerHTML = "";
 
 }
 
 
-/*
-====================================================
-ERROR MESSAGE
-====================================================
-*/
-
-function showError(
-    message
-) {
-
-    const error =
-        document.getElementById(
-            "error"
-        );
-
-
-    error.innerText =
-        "⚠️ " + message;
-
-
-    error.style.display =
-        "block";
-
-}
-
-
-/*
-====================================================
-SECURITY HELPERS
-====================================================
-*/
-
-function escapeHtml(
-    value
-) {
+function escapeHtml(value) {
 
     return String(value)
         .replace(/&/g, "&amp;")
@@ -1513,19 +617,40 @@ function escapeHtml(
 }
 
 
-function escapeAttribute(
-    value
-) {
+function escapeAttribute(value) {
 
     return String(value)
         .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
 
 }
 
 
-</script>
+/* Register the Progressive Web App service worker */
 
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", () => {
+
+        navigator.serviceWorker
+            .register("/sw.js")
+            .then(() => {
+                console.log("Industrial Lead Finder service worker registered.");
+            })
+            .catch(error => {
+                console.error(
+                    "Service worker registration failed:",
+                    error
+                );
+            });
+
+    });
+
+}
+
+</script>
 
 </body>
 </html>
+```
