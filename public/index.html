@@ -1,657 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <meta name="theme-color" content="#17202a">
-
-    <!-- Progressive Web App -->
-    <link rel="manifest" href="/manifest.json">
-
-    <!-- iPhone / iPad Home Screen Icon -->
-    <link rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png">
-
-    <!-- iPhone App Settings -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Lead Finder">
-
-    <title>Industrial Lead Finder</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f2f4f7;
-            color: #17202a;
-        }
-
-        header {
-            background: #17202a;
-            color: white;
-            padding: 18px 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 25px;
-        }
-
-        header p {
-            margin: 5px 0 0;
-            font-size: 13px;
-            opacity: 0.8;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        .search-panel {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        .field {
-            margin-bottom: 18px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 7px;
-        }
-
-        input,
-        select {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #ccd2d8;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        .process-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .process-option {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #fafafa;
-        }
-
-        .process-option input {
-            width: auto;
-        }
-
-        button {
-            border: none;
-            border-radius: 8px;
-            padding: 14px 18px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .search-btn {
-            width: 100%;
-            background: #1f6feb;
-            color: white;
-        }
-
-        .clear-btn {
-            width: 100%;
-            margin-top: 10px;
-            background: #e5e7eb;
-            color: #17202a;
-        }
-
-        .results-header {
-            margin: 25px 0 15px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .results {
-            display: grid;
-            gap: 15px;
-        }
-
-        .business-card {
-            background: white;
-            border-radius: 12px;
-            padding: 18px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .business-name {
-            font-size: 19px;
-            font-weight: bold;
-            margin-bottom: 7px;
-        }
-
-        .distance {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .info {
-            margin: 6px 0;
-            font-size: 14px;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin: 12px 0;
-        }
-
-        .tag {
-            background: #e8f0fe;
-            color: #174ea6;
-            padding: 5px 8px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .score {
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .actions a,
-        .actions button {
-            flex: 1;
-            text-align: center;
-            text-decoration: none;
-            padding: 11px 8px;
-            border-radius: 7px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .call {
-            background: #198754;
-            color: white;
-        }
-
-        .website {
-            background: #1f6feb;
-            color: white;
-        }
-
-        .save {
-            background: #f0ad4e;
-            color: white;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 25px;
-            font-weight: bold;
-        }
-
-        .spinner {
-            width: 30px;
-            height: 30px;
-            border: 4px solid #ddd;
-            border-top: 4px solid #1f6feb;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: auto auto 10px;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @media (min-width: 700px) {
-            .process-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .search-btn,
-            .clear-btn {
-                width: auto;
-            }
-
-            .clear-btn {
-                margin-top: 0;
-                margin-left: 10px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#17202a">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lead Finder">
+<title>Industrial Lead Finder</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f2f4f7;color:#17202a}header{background:#17202a;color:#fff;padding:18px 20px;text-align:center}header h1{margin:0;font-size:25px}header p{margin:5px 0 0;font-size:13px;opacity:.8}.tabs{display:flex;background:#fff;border-bottom:1px solid #d8dde3;position:sticky;top:0;z-index:5}.tab{flex:1;border:0;border-radius:0;background:#fff;color:#53606d;padding:14px 8px;font-weight:bold;font-size:15px}.tab.active{color:#1f6feb;border-bottom:3px solid #1f6feb}.container{max-width:1100px;margin:auto;padding:20px}.screen{display:none}.screen.active{display:block}.panel,.business-card,.lead-card,.stat{background:#fff;border-radius:12px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.08)}.field{margin-bottom:18px}label{display:block;font-weight:bold;margin-bottom:7px}input,select,textarea{width:100%;padding:13px;border:1px solid #ccd2d8;border-radius:8px;font-size:16px;font-family:inherit}textarea{min-height:100px;resize:vertical}.process-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.process-option{display:flex;align-items:center;gap:8px;padding:10px;border:1px solid #ddd;border-radius:8px;background:#fafafa}.process-option input{width:auto}button{border:none;border-radius:8px;padding:14px 18px;font-size:16px;font-weight:bold;cursor:pointer}.search-btn,.primary{width:100%;background:#1f6feb;color:#fff}.clear-btn{width:100%;margin-top:10px;background:#e5e7eb;color:#17202a}.results-header{margin:25px 0 15px;font-size:20px;font-weight:bold}.results,.lead-list{display:grid;gap:15px}.business-name{font-size:19px;font-weight:bold;margin-bottom:7px}.distance,.score{font-weight:bold;margin:10px 0}.info{margin:6px 0;font-size:14px}.tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.tag,.stage-badge{background:#e8f0fe;color:#174ea6;padding:5px 8px;border-radius:20px;font-size:12px;font-weight:bold;display:inline-block}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.actions a,.actions button{flex:1;min-width:80px;text-align:center;text-decoration:none;padding:11px 8px;border-radius:7px;font-size:14px;font-weight:bold}.call{background:#198754;color:#fff}.website{background:#1f6feb;color:#fff}.save{background:#f0ad4e;color:#fff}.email{background:#6f42c1;color:#fff}.edit{background:#495057;color:#fff}.remove{background:#dc3545;color:#fff}.loading{display:none;text-align:center;padding:25px;font-weight:bold}.spinner{width:30px;height:30px;border:4px solid #ddd;border-top:4px solid #1f6feb;border-radius:50%;animation:spin 1s linear infinite;margin:auto auto 10px}@keyframes spin{to{transform:rotate(360deg)}}.dashboard{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:15px}.stat{text-align:center;padding:14px 8px}.stat strong{display:block;font-size:24px}.stat span{font-size:12px;color:#68727d}.toolbar{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:15px}.lead-meta{display:grid;gap:5px;font-size:14px;margin-top:10px}.due{color:#b42318;font-weight:bold}.empty{text-align:center;padding:30px;color:#68727d;background:#fff;border-radius:12px}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:20;padding:18px;overflow:auto}.modal.open{display:block}.modal-box{background:#fff;max-width:600px;margin:20px auto;border-radius:14px;padding:20px}.modal-title{font-size:21px;font-weight:bold;margin:0 0 18px}.modal-actions{display:flex;gap:10px}.modal-actions button{flex:1}.secondary{background:#e5e7eb;color:#17202a}.small-note{font-size:12px;color:#68727d;margin-top:10px}
+@media(min-width:700px){.process-grid{grid-template-columns:repeat(3,1fr)}.search-btn,.clear-btn{width:auto}.clear-btn{margin-top:0;margin-left:10px}.toolbar{grid-template-columns:2fr 1fr}.dashboard{max-width:650px}}
+</style>
 </head>
-
 <body>
-
-<header>
-    <h1>Industrial Lead Finder</h1>
-    <p>Find industrial businesses and sales prospects</p>
-</header>
-
+<header><h1>Industrial Lead Finder</h1><p>Find prospects. Follow up. Close business.</p></header>
+<div class="tabs"><button id="findTab" class="tab active" onclick="showScreen('find')">FIND LEADS</button><button id="leadsTab" class="tab" onclick="showScreen('leads')">MY LEADS <span id="leadCountTab"></span></button></div>
 <div class="container">
-
-    <div class="search-panel">
-
-        <div class="field">
-            <label for="location">ZIP Code or Location</label>
-
-            <input
-                id="location"
-                type="text"
-                value="17401"
-                placeholder="Enter ZIP code or city">
-        </div>
-
-        <div class="field">
-
-            <label for="radius">Search Radius</label>
-
-            <select id="radius">
-                <option value="5">5 miles</option>
-                <option value="10">10 miles</option>
-                <option value="25" selected>25 miles</option>
-                <option value="50">50 miles</option>
-                <option value="100">100 miles</option>
-            </select>
-
-        </div>
-
-        <div class="field">
-
-            <label>Industrial Processes</label>
-
-            <div class="process-grid">
-
-                <label class="process-option">
-                    <input type="checkbox" value="CNC Machining">
-                    CNC Machining
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Machining">
-                    Machining
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Welding">
-                    Welding
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Fabrication">
-                    Fabrication
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Sheet Metal">
-                    Sheet Metal
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Laser Cutting">
-                    Laser Cutting
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Plasma Cutting">
-                    Plasma Cutting
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Waterjet">
-                    Waterjet
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Powder Coating">
-                    Powder Coating
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Industrial Painting">
-                    Industrial Painting
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Stamping">
-                    Stamping
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Grinding">
-                    Grinding
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Tube Bending">
-                    Tube Bending
-                </label>
-
-                <label class="process-option">
-                    <input type="checkbox" value="Assembly">
-                    Assembly
-                </label>
-
-            </div>
-        </div>
-
-        <button class="search-btn" onclick="searchBusinesses()">
-            FIND BUSINESSES
-        </button>
-
-        <button class="clear-btn" onclick="clearResults()">
-            CLEAR
-        </button>
-
-    </div>
-
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-        Searching for businesses...
-    </div>
-
-    <div class="results-header" id="resultsHeader"></div>
-
-    <div class="results" id="results"></div>
-
+<section id="findScreen" class="screen active">
+<div class="panel">
+<div class="field"><label for="location">ZIP Code or Location</label><input id="location" type="text" value="17401" placeholder="Enter ZIP code or city"></div>
+<div class="field"><label for="radius">Search Radius</label><select id="radius"><option value="5">5 miles</option><option value="10">10 miles</option><option value="25" selected>25 miles</option><option value="50">50 miles</option><option value="100">100 miles</option></select></div>
+<div class="field"><label>Industrial Processes</label><div class="process-grid" id="processGrid"></div></div>
+<button class="search-btn" onclick="searchBusinesses()">FIND BUSINESSES</button><button class="clear-btn" onclick="clearResults()">CLEAR</button>
 </div>
-
+<div class="loading" id="loading"><div class="spinner"></div>Searching for businesses...</div>
+<div class="results-header" id="resultsHeader"></div><div class="results" id="results"></div>
+</section>
+<section id="leadsScreen" class="screen">
+<div class="dashboard"><div class="stat"><strong id="savedCount">0</strong><span>Saved Leads</span></div><div class="stat"><strong id="followUpCount">0</strong><span>Follow-ups Due</span></div><div class="stat"><strong id="wonCount">0</strong><span>Won</span></div></div>
+<div class="toolbar"><input id="leadSearch" placeholder="Search saved leads..." oninput="renderLeads()"><select id="stageFilter" onchange="renderLeads()"><option value="All">All Stages</option><option>New</option><option>Contacted</option><option>Follow-Up</option><option>Quoted</option><option>Won</option><option>Lost</option></select></div>
+<div class="lead-list" id="leadList"></div>
+</section>
+</div>
+<div class="modal" id="editModal"><div class="modal-box"><div class="modal-title" id="editTitle">Edit Lead</div><input type="hidden" id="editId">
+<div class="field"><label>Contact Name</label><input id="contactName" placeholder="Contact name"></div>
+<div class="field"><label>Contact Email</label><input id="contactEmail" type="email" placeholder="name@company.com"></div>
+<div class="field"><label>Phone</label><input id="contactPhone" type="tel" placeholder="Phone number"></div>
+<div class="field"><label>Sales Stage</label><select id="leadStage"><option>New</option><option>Contacted</option><option>Follow-Up</option><option>Quoted</option><option>Won</option><option>Lost</option></select></div>
+<div class="field"><label>Next Follow-Up</label><input id="nextFollowUp" type="date"></div>
+<div class="field"><label>Last Contacted</label><input id="lastContacted" type="date"></div>
+<div class="field"><label>Notes</label><textarea id="leadNotes" placeholder="Conversation notes, quote details, next steps..."></textarea></div>
+<div class="modal-actions"><button class="secondary" onclick="closeEditor()">CANCEL</button><button class="primary" onclick="saveLeadEdits()">SAVE CHANGES</button></div></div></div>
 <script>
-
-async function searchBusinesses() {
-
-    const location =
-        document.getElementById("location").value.trim();
-
-    const radiusMiles =
-        Number(document.getElementById("radius").value);
-
-    const processes =
-        Array.from(
-            document.querySelectorAll(
-                '.process-option input:checked'
-            )
-        ).map(input => input.value);
-
-    if (!location) {
-        alert("Please enter a ZIP code or location.");
-        return;
-    }
-
-    if (processes.length === 0) {
-        alert("Please select at least one industrial process.");
-        return;
-    }
-
-    document.getElementById("loading").style.display = "block";
-    document.getElementById("results").innerHTML = "";
-    document.getElementById("resultsHeader").innerHTML = "";
-
-    try {
-
-        const response = await fetch("/api/search", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                location,
-                radiusMiles,
-                processes
-            })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || "Search failed.");
-        }
-
-        displayResults(data);
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert("Search failed: " + error.message);
-
-    } finally {
-
-        document.getElementById("loading").style.display = "none";
-
-    }
-}
-
-
-function displayResults(data) {
-
-    const results = data.leads || [];
-
-    document.getElementById("resultsHeader").innerText =
-        `${results.length} businesses found`;
-
-    const container =
-        document.getElementById("results");
-
-    if (results.length === 0) {
-
-        container.innerHTML =
-            "<div class='business-card'>No businesses found.</div>";
-
-        return;
-    }
-
-    results.forEach(business => {
-
-        const card =
-            document.createElement("div");
-
-        card.className = "business-card";
-
-        const phone =
-            business.phone || "";
-
-        const website =
-            business.website || "";
-
-        const address =
-            business.address || "";
-
-        const score =
-            business.leadScore ?? business.score ?? "";
-
-        const processes =
-            business.processes || [];
-
-        card.innerHTML = `
-
-            <div class="business-name">
-                ${escapeHtml(business.name || "Unknown Business")}
-            </div>
-
-            <div class="distance">
-                ${
-                    business.distanceMiles != null
-                    ? business.distanceMiles.toFixed(1) + " miles away"
-                    : ""
-                }
-            </div>
-
-            <div class="info">
-                ${escapeHtml(address)}
-            </div>
-
-            <div class="info">
-                ${escapeHtml(phone)}
-            </div>
-
-            <div class="tags">
-                ${
-                    processes.map(process =>
-                        `<span class="tag">${escapeHtml(process)}</span>`
-                    ).join("")
-                }
-            </div>
-
-            <div class="score">
-                Lead Score: ${score}
-            </div>
-
-            <div class="actions">
-
-                ${
-                    phone
-                    ? `<a class="call" href="tel:${phone}">CALL</a>`
-                    : ""
-                }
-
-                ${
-                    website
-                    ? `<a class="website"
-                         href="${escapeAttribute(website)}"
-                         target="_blank">
-                         WEBSITE
-                       </a>`
-                    : ""
-                }
-
-                <button
-                    class="save"
-                    onclick='saveLead(${JSON.stringify(business).replace(/'/g, "&#39;")})'>
-                    SAVE
-                </button>
-
-            </div>
-        `;
-
-        container.appendChild(card);
-
-    });
-}
-
-
-function saveLead(business) {
-
-    const saved =
-        JSON.parse(
-            localStorage.getItem("savedLeads") || "[]"
-        );
-
-    const exists =
-        saved.some(
-            lead => lead.placeId === business.placeId
-        );
-
-    if (!exists) {
-
-        saved.push(business);
-
-        localStorage.setItem(
-            "savedLeads",
-            JSON.stringify(saved)
-        );
-
-        alert("Lead saved!");
-
-    } else {
-
-        alert("This lead is already saved.");
-
-    }
-}
-
-
-function clearResults() {
-
-    document.getElementById("results").innerHTML = "";
-    document.getElementById("resultsHeader").innerHTML = "";
-
-}
-
-
-function escapeHtml(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-function escapeAttribute(value) {
-
-    return String(value)
-        .replace(/"/g, "&quot;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-
-}
-
-
-/* Register Progressive Web App service worker */
-
-if ("serviceWorker" in navigator) {
-
-    window.addEventListener("load", () => {
-
-        navigator.serviceWorker
-            .register("/sw.js")
-            .then(() => {
-                console.log(
-                    "Industrial Lead Finder service worker registered."
-                );
-            })
-            .catch(error => {
-                console.error(
-                    "Service worker registration failed:",
-                    error
-                );
-            });
-
-    });
-}
-
+const processOptions=["CNC Machining","Machining","Welding","Fabrication","Sheet Metal","Laser Cutting","Plasma Cutting","Waterjet","Powder Coating","Industrial Painting","Stamping","Grinding","Tube Bending","Assembly"];
+document.getElementById('processGrid').innerHTML=processOptions.map(p=>`<label class="process-option"><input type="checkbox" value="${p}">${p}</label>`).join('');
+function showScreen(which){document.getElementById('findScreen').classList.toggle('active',which==='find');document.getElementById('leadsScreen').classList.toggle('active',which==='leads');document.getElementById('findTab').classList.toggle('active',which==='find');document.getElementById('leadsTab').classList.toggle('active',which==='leads');if(which==='leads')renderLeads()}
+async function searchBusinesses(){const location=document.getElementById('location').value.trim();const radiusMiles=Number(document.getElementById('radius').value);const processes=Array.from(document.querySelectorAll('.process-option input:checked')).map(i=>i.value);if(!location){alert('Please enter a ZIP code or location.');return}if(!processes.length){alert('Please select at least one industrial process.');return}document.getElementById('loading').style.display='block';document.getElementById('results').innerHTML='';document.getElementById('resultsHeader').innerHTML='';try{const response=await fetch('/api/search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location,radiusMiles,processes})});const data=await response.json();if(!response.ok)throw new Error(data.error||'Search failed.');displayResults(data)}catch(error){console.error(error);alert('Search failed: '+error.message)}finally{document.getElementById('loading').style.display='none'}}
+function businessKey(b){return b.placeId||b.id||[b.name,b.address].join('|')}
+function displayResults(data){const results=data.leads||[];document.getElementById('resultsHeader').innerText=`${results.length} businesses found`;const container=document.getElementById('results');if(!results.length){container.innerHTML="<div class='business-card'>No businesses found.</div>";return}results.forEach(b=>{const card=document.createElement('div');card.className='business-card';const phone=b.phone||'',website=b.website||'',address=b.address||'',score=b.leadScore??b.score??'',processes=b.processes||[];card.innerHTML=`<div class="business-name">${escapeHtml(b.name||'Unknown Business')}</div><div class="distance">${b.distanceMiles!=null?Number(b.distanceMiles).toFixed(1)+' miles away':''}</div><div class="info">${escapeHtml(address)}</div><div class="info">${escapeHtml(phone)}</div><div class="tags">${processes.map(p=>`<span class="tag">${escapeHtml(p)}</span>`).join('')}</div><div class="score">Lead Score: ${score}</div><div class="actions">${phone?`<a class="call" href="tel:${escapeAttribute(phone)}">CALL</a>`:''}${website?`<a class="website" href="${escapeAttribute(website)}" target="_blank" rel="noopener">WEBSITE</a>`:''}<button class="save">SAVE</button></div>`;card.querySelector('.save').onclick=()=>saveLead(b);container.appendChild(card)})}
+function getLeads(){let leads=[];try{leads=JSON.parse(localStorage.getItem('savedLeads')||'[]')}catch(e){}return Array.isArray(leads)?leads:[]}
+function setLeads(leads){localStorage.setItem('savedLeads',JSON.stringify(leads));updateCounts()}
+function normalizeLead(lead){return {...lead,_key:lead._key||businessKey(lead),contactName:lead.contactName||'',contactEmail:lead.contactEmail||'',contactPhone:lead.contactPhone||lead.phone||'',notes:lead.notes||'',stage:lead.stage||'New',nextFollowUp:lead.nextFollowUp||'',lastContacted:lead.lastContacted||'',savedAt:lead.savedAt||new Date().toISOString()}}
+function saveLead(business){const saved=getLeads().map(normalizeLead);const key=businessKey(business);if(saved.some(l=>l._key===key)){alert('This lead is already saved.');return}saved.push(normalizeLead({...business,_key:key}));setLeads(saved);alert('Lead saved to My Leads!')}
+function renderLeads(){let leads=getLeads().map(normalizeLead);const q=(document.getElementById('leadSearch').value||'').toLowerCase().trim();const stage=document.getElementById('stageFilter').value;leads=leads.filter(l=>(stage==='All'||l.stage===stage)&&(!q||[l.name,l.address,l.contactName,l.contactEmail,l.phone,l.notes].join(' ').toLowerCase().includes(q)));const box=document.getElementById('leadList');if(!leads.length){box.innerHTML='<div class="empty">No saved leads match this view.<br><br>Use Find Leads and tap SAVE on a business.</div>';updateCounts();return}box.innerHTML='';leads.forEach(l=>{const card=document.createElement('div');card.className='lead-card';const phone=l.contactPhone||l.phone||'';const due=isDue(l.nextFollowUp);card.innerHTML=`<div class="business-name">${escapeHtml(l.name||'Unknown Business')}</div><span class="stage-badge">${escapeHtml(l.stage)}</span><div class="lead-meta"><div>${escapeHtml(l.address||'')}</div>${l.contactName?`<div><strong>Contact:</strong> ${escapeHtml(l.contactName)}</div>`:''}${phone?`<div><strong>Phone:</strong> ${escapeHtml(phone)}</div>`:''}${l.contactEmail?`<div><strong>Email:</strong> ${escapeHtml(l.contactEmail)}</div>`:''}${l.lastContacted?`<div><strong>Last contacted:</strong> ${formatDate(l.lastContacted)}</div>`:''}${l.nextFollowUp?`<div class="${due?'due':''}"><strong>Next follow-up:</strong> ${formatDate(l.nextFollowUp)}${due?' — DUE':''}</div>`:''}${l.notes?`<div><strong>Notes:</strong> ${escapeHtml(l.notes)}</div>`:''}</div><div class="actions">${phone?`<a class="call" href="tel:${escapeAttribute(phone)}">CALL</a>`:''}${l.contactEmail?`<a class="email" href="mailto:${escapeAttribute(l.contactEmail)}">EMAIL</a>`:''}${l.website?`<a class="website" href="${escapeAttribute(l.website)}" target="_blank" rel="noopener">WEBSITE</a>`:''}<button class="edit">EDIT</button><button class="remove">REMOVE</button></div>`;card.querySelector('.edit').onclick=()=>openEditor(l._key);card.querySelector('.remove').onclick=()=>removeLead(l._key,l.name);box.appendChild(card)});updateCounts()}
+function openEditor(key){const lead=getLeads().map(normalizeLead).find(l=>l._key===key);if(!lead)return;document.getElementById('editId').value=key;document.getElementById('editTitle').innerText='Edit '+(lead.name||'Lead');document.getElementById('contactName').value=lead.contactName;document.getElementById('contactEmail').value=lead.contactEmail;document.getElementById('contactPhone').value=lead.contactPhone||lead.phone||'';document.getElementById('leadStage').value=lead.stage;document.getElementById('nextFollowUp').value=lead.nextFollowUp;document.getElementById('lastContacted').value=lead.lastContacted;document.getElementById('leadNotes').value=lead.notes;document.getElementById('editModal').classList.add('open')}
+function closeEditor(){document.getElementById('editModal').classList.remove('open')}
+function saveLeadEdits(){const key=document.getElementById('editId').value;const leads=getLeads().map(normalizeLead);const i=leads.findIndex(l=>l._key===key);if(i<0)return;leads[i]={...leads[i],contactName:document.getElementById('contactName').value.trim(),contactEmail:document.getElementById('contactEmail').value.trim(),contactPhone:document.getElementById('contactPhone').value.trim(),stage:document.getElementById('leadStage').value,nextFollowUp:document.getElementById('nextFollowUp').value,lastContacted:document.getElementById('lastContacted').value,notes:document.getElementById('leadNotes').value.trim()};setLeads(leads);closeEditor();renderLeads()}
+function removeLead(key,name){if(!confirm(`Remove ${name||'this lead'} from My Leads?`))return;setLeads(getLeads().map(normalizeLead).filter(l=>l._key!==key));renderLeads()}
+function isDue(date){if(!date)return false;const today=new Date();today.setHours(0,0,0,0);const d=new Date(date+'T00:00:00');return d<=today}
+function formatDate(date){if(!date)return'';return new Date(date+'T00:00:00').toLocaleDateString()}
+function updateCounts(){const leads=getLeads().map(normalizeLead);document.getElementById('savedCount').innerText=leads.length;document.getElementById('followUpCount').innerText=leads.filter(l=>isDue(l.nextFollowUp)&&!['Won','Lost'].includes(l.stage)).length;document.getElementById('wonCount').innerText=leads.filter(l=>l.stage==='Won').length;document.getElementById('leadCountTab').innerText=leads.length?`(${leads.length})`:''}
+function clearResults(){document.getElementById('results').innerHTML='';document.getElementById('resultsHeader').innerHTML=''}
+function escapeHtml(value){return String(value??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+function escapeAttribute(value){return escapeHtml(value)}
+document.getElementById('editModal').addEventListener('click',e=>{if(e.target.id==='editModal')closeEditor()});updateCounts();
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(error=>console.error('Service worker registration failed:',error)))}
 </script>
-
-</body>
-</html>
+</body></html>
